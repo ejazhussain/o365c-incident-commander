@@ -1,0 +1,168 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/copilot/plugin/v2.4/schema.json",
+    "schema_version": "v2.4",
+    "name_for_human": "IC Post-Mortem",
+    "description_for_human": "Post-mortem generation tools for resolved IT incidents",
+    "namespace": "incidentpostmortem",
+    "functions": [
+        {
+            "name": "get_incident",
+            "description": "Get full details of a resolved incident including status, severity, timeline, affected services, and description",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID (e.g. INC-2026-041)"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Full incident object as JSON"
+            }
+        },
+        {
+            "name": "get_status_timeline",
+            "description": "Get the full chronological status and communication timeline for an incident",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "JSON array of status timeline entries in chronological order"
+            }
+        },
+        {
+            "name": "get_change_log",
+            "description": "Get the change log of infrastructure and configuration changes around the time of the incident",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "hours": {
+                        "type": "integer",
+                        "description": "Look back this many hours (default: 24)"
+                    },
+                    "service": {
+                        "type": "string",
+                        "description": "Filter by service name"
+                    }
+                }
+            },
+            "returns": {
+                "type": "string",
+                "description": "JSON array of change log entries"
+            }
+        },
+        {
+            "name": "investigate_incident",
+            "description": "Run a complete root cause analysis for an incident in a single call. Returns the incident details, all recent deployments, change log entries, and known issues aggregated and ready to analyse.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID to investigate (e.g. INC-2026-042)"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Aggregated incident data including deployments, changes, and known issues as JSON"
+            }
+        },
+        {
+            "name": "create_post_mortem",
+            "description": "Save a completed post-mortem document to the incident record",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID this post-mortem belongs to"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Post-mortem document title"
+                    },
+                    "summary": {
+                        "type": "string",
+                        "description": "Executive summary of the incident"
+                    },
+                    "rootCause": {
+                        "type": "string",
+                        "description": "Root cause statement"
+                    },
+                    "timeline": {
+                        "type": "string",
+                        "description": "Narrative timeline of key events"
+                    },
+                    "impact": {
+                        "type": "string",
+                        "description": "Description of customer and business impact"
+                    },
+                    "whatWentWell": {
+                        "type": "string",
+                        "description": "What went well during the incident response"
+                    },
+                    "whatWentWrong": {
+                        "type": "string",
+                        "description": "What went wrong or could have been done better"
+                    },
+                    "actionItems": {
+                        "type": "string",
+                        "description": "JSON array of action items with owner and due date"
+                    },
+                    "author": {
+                        "type": "string",
+                        "description": "Who authored the post-mortem"
+                    }
+                },
+                "required": [
+                    "incidentId",
+                    "title",
+                    "summary",
+                    "rootCause",
+                    "actionItems"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Confirmation with the saved post-mortem ID"
+            }
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "RemoteMCPServer",
+            "auth": {
+                "type": "None"
+            },
+            "spec": {
+                "url": "https://office365clinic.mcpserver.ngrok.app/mcp"
+            },
+            "run_for_functions": [
+                "get_incident",
+                "get_status_timeline",
+                "get_change_log",
+                "investigate_incident",
+                "create_post_mortem"
+            ]
+        }
+    ]
+}

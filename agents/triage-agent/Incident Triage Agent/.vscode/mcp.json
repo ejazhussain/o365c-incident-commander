@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "office365c": {
+      "type": "http",
+      "url": "https://office365clinic.mcpserver.ngrok.app/mcp"
+    }
+  }
+}

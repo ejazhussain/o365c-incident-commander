@@ -1,0 +1,9 @@
+# VS Code / OS
+.DS_Store
+Thumbs.db
+
+# Teams Toolkit build output
+appPackage/build/
+
+# Secret env files
+env/*.user

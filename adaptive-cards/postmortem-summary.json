@@ -1,0 +1,190 @@
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.5",
+    "metadata": {
+        "purpose": "Renders the output of create_post_mortem MCP tool",
+        "tool": "create_post_mortem",
+        "agent": "IC Post-Mortem"
+    },
+    "body": [
+        {
+            "type": "Container",
+            "style": "good",
+            "bleed": true,
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "📋 Post-Mortem Report",
+                                    "weight": "Bolder",
+                                    "size": "Large",
+                                    "color": "Light"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{title}}",
+                                    "size": "Medium",
+                                    "color": "Light",
+                                    "wrap": true,
+                                    "spacing": "None"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "FactSet",
+            "spacing": "Medium",
+            "facts": [
+                {
+                    "title": "Incident",
+                    "value": "{{incidentId}}"
+                },
+                {
+                    "title": "PM ID",
+                    "value": "{{id}}"
+                },
+                {
+                    "title": "Author",
+                    "value": "{{author}}"
+                },
+                {
+                    "title": "Created",
+                    "value": "{{createdAt}}"
+                }
+            ]
+        },
+        {
+            "type": "TextBlock",
+            "text": "**Summary**",
+            "weight": "Bolder",
+            "spacing": "Medium"
+        },
+        {
+            "type": "TextBlock",
+            "text": "{{summary}}",
+            "wrap": true,
+            "spacing": "Small"
+        },
+        {
+            "type": "TextBlock",
+            "text": "**Root Cause**",
+            "weight": "Bolder",
+            "spacing": "Medium",
+            "color": "Attention"
+        },
+        {
+            "type": "TextBlock",
+            "text": "{{rootCause}}",
+            "wrap": true,
+            "spacing": "Small"
+        },
+        {
+            "type": "TextBlock",
+            "text": "**Impact**",
+            "weight": "Bolder",
+            "spacing": "Medium"
+        },
+        {
+            "type": "TextBlock",
+            "text": "{{impact}}",
+            "wrap": true,
+            "spacing": "Small"
+        },
+        {
+            "type": "TextBlock",
+            "text": "**Action Items**",
+            "weight": "Bolder",
+            "spacing": "Medium",
+            "separator": true
+        },
+        {
+            "type": "Container",
+            "$data": "{{actionItems}}",
+            "spacing": "Small",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "16px",
+                            "verticalContentAlignment": "Top",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "☐",
+                                    "spacing": "None"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{action}}",
+                                    "wrap": true,
+                                    "spacing": "None"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Owner: {{owner}} · Due: {{deadline}} · {{status}}",
+                                    "isSubtle": true,
+                                    "size": "Small",
+                                    "spacing": "None"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "sampleData": {
+        "id": "PM-002",
+        "incidentId": "INC-2026-042",
+        "title": "Payment Service P1 Outage — Connection Pool Misconfiguration",
+        "summary": "Payment service P1 outage caused by connection pool misconfiguration in v2.4.1 deployment. All customer transactions failed for approximately 20 minutes.",
+        "rootCause": "Config change CL-001 in deployment v2.4.1 reduced the payment-service connection pool max size from 50 to 10 as a misguided 'optimization'. Under normal production load (~300 TPS), the pool was exhausted within seconds causing 503 errors on all payment processing endpoints.",
+        "impact": "100% of customer transactions failed for ~20 minutes (13:00–13:20 UTC). Estimated revenue impact: $1M. 15,000+ customers affected. 200+ support tickets. SLA breach for 3 enterprise customers.",
+        "author": "sarah.chen",
+        "createdAt": "2026-02-28T14:00:00Z",
+        "actionItems": [
+            {
+                "action": "Add known issues checklist to deployment runbook — must verify KI list before any connection pool changes",
+                "owner": "sarah.chen",
+                "deadline": "2026-03-07",
+                "status": "open"
+            },
+            {
+                "action": "Implement automated pre-deployment validation that rejects pool size < 20 for payment-service",
+                "owner": "ops-team",
+                "deadline": "2026-03-14",
+                "status": "open"
+            },
+            {
+                "action": "Add load test stage to payment-service CI pipeline simulating 300 TPS to catch pool exhaustion",
+                "owner": "sarah.chen",
+                "deadline": "2026-03-14",
+                "status": "open"
+            },
+            {
+                "action": "Review all other services for similar risky config defaults",
+                "owner": "ops-team",
+                "deadline": "2026-03-07",
+                "status": "open"
+            }
+        ]
+    }
+}

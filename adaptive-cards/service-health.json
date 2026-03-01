@@ -1,0 +1,159 @@
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.5",
+    "metadata": {
+        "purpose": "Renders the output of get_service_health MCP tool",
+        "tool": "get_service_health",
+        "agent": "IC Triage"
+    },
+    "body": [
+        {
+            "type": "Container",
+            "style": "emphasis",
+            "bleed": true,
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "🩺 Service Health Dashboard",
+                                    "weight": "Bolder",
+                                    "size": "Large"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "verticalContentAlignment": "Center",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Checked: {{lastChecked}}",
+                                    "size": "Small",
+                                    "isSubtle": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "$data": "{{services}}",
+            "separator": true,
+            "spacing": "Small",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "spacing": "Small",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "12px",
+                            "verticalContentAlignment": "Center",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "●",
+                                    "size": "Large",
+                                    "color": "Good",
+                                    "spacing": "None"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "**{{serviceName}}**",
+                                    "spacing": "None"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{details}}",
+                                    "isSubtle": true,
+                                    "size": "Small",
+                                    "spacing": "None",
+                                    "wrap": true,
+                                    "maxLines": 2
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "verticalContentAlignment": "Center",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{status}}",
+                                    "weight": "Bolder",
+                                    "color": "Good"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{uptime}}% uptime",
+                                    "size": "Small",
+                                    "isSubtle": true,
+                                    "spacing": "None",
+                                    "horizontalAlignment": "Right"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "sampleData": {
+        "lastChecked": "2026-02-28T13:30:00Z",
+        "services": [
+            {
+                "serviceName": "payment-service",
+                "status": "down",
+                "uptime": 94.2,
+                "details": "HTTP 503 errors on /process-payment. Connection pool exhaustion detected."
+            },
+            {
+                "serviceName": "checkout-api",
+                "status": "degraded",
+                "uptime": 97.1,
+                "details": "Elevated latency (p99 >8s). Dependent on payment-service."
+            },
+            {
+                "serviceName": "auth-service",
+                "status": "healthy",
+                "uptime": 99.98,
+                "details": "Operating normally."
+            },
+            {
+                "serviceName": "api-gateway",
+                "status": "healthy",
+                "uptime": 99.95,
+                "details": "Operating normally."
+            },
+            {
+                "serviceName": "order-database",
+                "status": "healthy",
+                "uptime": 99.99,
+                "details": "Operating normally."
+            },
+            {
+                "serviceName": "cdn-static",
+                "status": "healthy",
+                "uptime": 99.97,
+                "details": "Cache hit rate 98.5%."
+            }
+        ]
+    }
+}

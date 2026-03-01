@@ -1,0 +1,150 @@
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.5",
+    "metadata": {
+        "purpose": "Renders the output of list_active_incidents MCP tool",
+        "tool": "list_active_incidents",
+        "agent": "IC Triage"
+    },
+    "body": [
+        {
+            "type": "Container",
+            "style": "attention",
+            "bleed": true,
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "🚨 Active Incident Dashboard",
+                                    "weight": "Bolder",
+                                    "size": "Large",
+                                    "color": "Light"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "verticalContentAlignment": "Center",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{lastUpdated}}",
+                                    "size": "Small",
+                                    "color": "Light",
+                                    "isSubtle": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "$data": "{{incidents}}",
+            "separator": true,
+            "spacing": "Small",
+            "style": "default",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "spacing": "Small",
+                    "selectAction": {
+                        "type": "Action.OpenUrl",
+                        "url": "https://m365.cloud.microsoft/chat"
+                    },
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "40px",
+                            "verticalContentAlignment": "Center",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{severity}}",
+                                    "weight": "Bolder",
+                                    "size": "Large",
+                                    "color": "Attention",
+                                    "horizontalAlignment": "Center"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "**{{id}}** — {{title}}",
+                                    "wrap": true,
+                                    "spacing": "None"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{status}} · {{services}} · {{assignedTo}}",
+                                    "isSubtle": true,
+                                    "size": "Small",
+                                    "spacing": "None",
+                                    "wrap": true
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "verticalContentAlignment": "Center",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{createdAt}}",
+                                    "size": "Small",
+                                    "isSubtle": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "sampleData": {
+        "lastUpdated": "2026-02-28T13:30:00Z",
+        "incidents": [
+            {
+                "id": "INC-2026-042",
+                "title": "Payment service complete outage — all transactions failing",
+                "severity": "P1",
+                "status": "open",
+                "services": "payment-service, checkout-api",
+                "assignedTo": "unassigned",
+                "createdAt": "2026-02-28T13:00Z"
+            },
+            {
+                "id": "INC-2026-043",
+                "title": "Checkout API degraded — elevated error rate",
+                "severity": "P2",
+                "status": "open",
+                "services": "checkout-api",
+                "assignedTo": "dev-oncall",
+                "createdAt": "2026-02-28T13:05Z"
+            },
+            {
+                "id": "INC-2026-044",
+                "title": "API gateway elevated memory usage",
+                "severity": "P3",
+                "status": "open",
+                "services": "api-gateway",
+                "assignedTo": "ops-team",
+                "createdAt": "2026-02-28T11:00Z"
+            }
+        ]
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "version": "v1.6",
+    "name": "IC Post-Mortem",
+    "description": "Generates structured blameless post-mortems from resolved incidents by analysing timelines, change logs, and impact data to produce complete RCA documents with action items.",
+    "instructions": "$[file('instruction.txt')]",
+    "conversation_starters": [
+        {
+            "title": "Generate a post-mortem",
+            "text": "Generate a post-mortem for INC-2026-041"
+        },
+        {
+            "title": "What went well / wrong",
+            "text": "Analyse what went well and what went wrong during INC-2026-041"
+        },
+        {
+            "title": "Action items",
+            "text": "What action items should we take to prevent INC-2026-041 from happening again?"
+        },
+        {
+            "title": "Save post-mortem",
+            "text": "Save the post-mortem for INC-2026-041 to the system"
+        }
+    ],
+    "actions": [
+        {
+            "id": "action_1",
+            "file": "ai-plugin.json"
+        }
+    ]
+}

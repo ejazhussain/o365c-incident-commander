@@ -1,0 +1,39 @@
+{
+    "$schema": "https://aka.ms/json-schemas/copilot/declarative-agent/v1.6/schema.json",
+    "version": "v1.6",
+    "name": "IC Commander",
+    "description": "Central orchestrator for IT incident response. Routes to the right specialist agent based on incident phase: Triage, Investigation, Communication, or Post-Mortem.",
+    "instructions": "$[file('instruction.txt')]",
+    "conversation_starters": [
+        {
+            "title": "Start incident response",
+            "text": "We have a major outage on the payment service — where do I start?"
+        },
+        {
+            "title": "Full incident workflow",
+            "text": "Walk me through the full incident response process for INC-2026-041"
+        },
+        {
+            "title": "What agent should I use?",
+            "text": "The root cause has been identified — what should I do next?"
+        },
+        {
+            "title": "Incident resolved — close it out",
+            "text": "INC-2026-041 is resolved — help me wrap up and generate a post-mortem"
+        }
+    ],
+    "worker_agents": [
+        {
+            "id": "T_8c92ebca-29b7-df7d-0bc5-46470e5ecae1"
+        },
+        {
+            "id": "T_332b3e34-a33e-4bce-1210-032f655c073d"
+        },
+        {
+            "id": "T_bb5ed05b-64ac-9b5a-f617-793f895c287d"
+        },
+        {
+            "id": "T_58b93cdb-5ea1-b42e-cb3d-c37d13fb7a61"
+        }
+    ]
+}

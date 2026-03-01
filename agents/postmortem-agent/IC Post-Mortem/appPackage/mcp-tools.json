@@ -1,0 +1,123 @@
+{
+    "tools": [
+        {
+            "name": "investigate_incident",
+            "description": "Run a complete root cause analysis for an incident in a single call. Returns the incident details, all recent deployments, change log entries, and known issues aggregated. Use this instead of calling get_incident, get_status_timeline, and get_change_log separately.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID to investigate (e.g. INC-2026-042)"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            }
+        },
+        {
+            "name": "get_incident", including status, severity, timeline, affected services, and description","inputSchema": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID (e.g. INC-2026-041)"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            }
+        },
+        {
+            "name": "get_status_timeline",
+            "description": "Get the full chronological status and communication timeline for an incident",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            }
+        },
+        {
+            "name": "get_change_log",
+            "description": "Get the change log of infrastructure and configuration changes around the time of the incident",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "hours": {
+                        "type": "integer",
+                        "description": "Look back this many hours (default: 24)"
+                    },
+                    "service": {
+                        "type": "string",
+                        "description": "Filter by service name"
+                    }
+                }
+            }
+        },
+        {
+            "name": "create_post_mortem",
+            "description": "Save a completed post-mortem document to the incident record",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID this post-mortem belongs to"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Post-mortem document title"
+                    },
+                    "summary": {
+                        "type": "string",
+                        "description": "Executive summary of the incident"
+                    },
+                    "rootCause": {
+                        "type": "string",
+                        "description": "Root cause statement"
+                    },
+                    "timeline": {
+                        "type": "string",
+                        "description": "Narrative timeline of key events"
+                    },
+                    "impact": {
+                        "type": "string",
+                        "description": "Description of customer and business impact"
+                    },
+                    "whatWentWell": {
+                        "type": "string",
+                        "description": "What went well during the incident response"
+                    },
+                    "whatWentWrong": {
+                        "type": "string",
+                        "description": "What went wrong or could have been done better"
+                    },
+                    "actionItems": {
+                        "type": "string",
+                        "description": "JSON array of action items with owner and due date"
+                    },
+                    "author": {
+                        "type": "string",
+                        "description": "Who authored the post-mortem"
+                    }
+                },
+                "required": [
+                    "incidentId",
+                    "title",
+                    "summary",
+                    "rootCause",
+                    "actionItems"
+                ]
+            }
+        }
+    ]
+}

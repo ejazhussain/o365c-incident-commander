@@ -1,0 +1,599 @@
+{
+    "incidents": [
+        {
+            "id": "INC-2026-042",
+            "title": "Payment service complete outage — all transactions failing",
+            "severity": "P1",
+            "status": "open",
+            "services": [
+                "payment-service",
+                "checkout-api"
+            ],
+            "description": "Payment service is fully down. All customer transactions are failing with 503 errors. Checkout API also degraded. 100% of users unable to complete purchases. Revenue impact estimated at $50k/min.",
+            "reportedBy": "monitoring-bot",
+            "assignedTo": "unassigned",
+            "createdAt": "2026-02-28T13:00:00.000Z",
+            "updatedAt": "2026-02-28T13:00:00.000Z",
+            "resolvedAt": null
+        },
+        {
+            "id": "INC-2026-043",
+            "title": "Checkout API degraded — elevated error rate",
+            "severity": "P2",
+            "status": "open",
+            "services": [
+                "checkout-api"
+            ],
+            "description": "Checkout API returning intermittent 500 errors. Approximately 30% of checkout requests failing. Correlated with payment-service outage.",
+            "reportedBy": "alertmanager",
+            "assignedTo": "dev-oncall",
+            "createdAt": "2026-02-28T13:05:00.000Z",
+            "updatedAt": "2026-02-28T13:05:00.000Z",
+            "resolvedAt": null
+        },
+        {
+            "id": "INC-2026-044",
+            "title": "API gateway elevated memory usage — approaching OOM threshold",
+            "severity": "P3",
+            "status": "open",
+            "services": [
+                "api-gateway"
+            ],
+            "description": "API gateway memory usage at 87% (normal ~60%). Currently handling 12,400 concurrent WebSocket connections. Known memory leak (KI-005) triggers above 10,000. No user impact yet but OOM risk within 6 hours without intervention.",
+            "reportedBy": "alertmanager",
+            "assignedTo": "ops-team",
+            "createdAt": "2026-02-28T11:00:00.000Z",
+            "updatedAt": "2026-02-28T11:00:00.000Z",
+            "resolvedAt": null
+        },
+        {
+            "id": "INC-2026-040",
+            "title": "CDN cache poisoning — stale assets served to EU region",
+            "severity": "P3",
+            "status": "resolved",
+            "services": [
+                "cdn-static"
+            ],
+            "description": "EU CDN edge nodes served stale JavaScript bundles for 45 minutes after a botched cache purge. Users on old bundle version saw broken UI on checkout page. No data loss. Fixed by full cache purge across all edge nodes.",
+            "reportedBy": "support-team",
+            "assignedTo": "ops-team",
+            "createdAt": "2026-02-25T14:00:00.000Z",
+            "updatedAt": "2026-02-25T15:00:00.000Z",
+            "resolvedAt": "2026-02-25T15:00:00.000Z"
+        },
+        {
+            "id": "INC-2026-041",
+            "title": "Auth service token validation failures",
+            "severity": "P2",
+            "status": "resolved",
+            "services": [
+                "auth-service"
+            ],
+            "description": "Auth service returning 401 errors on token refresh endpoint. Users unable to log in via SSO. Approximately 2,000 users affected over 15-minute window.",
+            "reportedBy": "monitoring-bot",
+            "assignedTo": "maria.garcia",
+            "createdAt": "2026-02-18T09:15:00.000Z",
+            "updatedAt": "2026-02-18T10:30:00.000Z",
+            "resolvedAt": "2026-02-18T10:30:00.000Z"
+        }
+    ],
+    "statusUpdates": [
+        {
+            "id": "SU-006",
+            "incidentId": "INC-2026-042",
+            "message": "ALERT: payment-service HTTP 503 error rate reached 100%. All /process-payment requests failing. Connection pool exhausted (0/10 available). Incident auto-created.",
+            "author": "monitoring-bot",
+            "severity": "P1",
+            "status": "open",
+            "createdAt": "2026-02-28T13:00:00.000Z"
+        },
+        {
+            "id": "SU-007",
+            "incidentId": "INC-2026-042",
+            "message": "On-call engineer paged. Initial assessment: payment-service connection pool at 0/10. Suspect recent config change CL-001 (pool size reduced from 50 to 10 at 12:30 UTC). Investigating correlation.",
+            "author": "alex.kumar",
+            "severity": "P1",
+            "status": "investigating",
+            "createdAt": "2026-02-28T13:08:00.000Z"
+        },
+        {
+            "id": "SU-008",
+            "incidentId": "INC-2026-042",
+            "message": "Root cause identified: CL-001 config change reduced connection pool max size from 50 to 10. Under normal load (~300 TPS) pool is exhausted within seconds. Known issue KI-001 confirms this behaviour. Preparing rollback.",
+            "author": "sarah.chen",
+            "severity": "P1",
+            "status": "identified",
+            "createdAt": "2026-02-28T13:15:00.000Z"
+        },
+        {
+            "id": "SU-009",
+            "incidentId": "INC-2026-043",
+            "message": "ALERT: checkout-api p99 latency exceeded 8s (normal <500ms). Error rate 30%. Downstream dependency payment-service is down — cascading failure via KI-003 timeout behaviour.",
+            "author": "alertmanager",
+            "severity": "P2",
+            "status": "open",
+            "createdAt": "2026-02-28T13:05:00.000Z"
+        },
+        {
+            "id": "SU-010",
+            "incidentId": "INC-2026-042",
+            "message": "Stakeholder comms sent: Rachel Torres (CEO), Mike Chen (VP Eng), Lisa Park (Customer Success) notified of P1 payment outage. Customer status page updated to 'Investigating payment issues'.",
+            "author": "alex.kumar",
+            "severity": "P1",
+            "status": "investigating",
+            "createdAt": "2026-02-28T13:10:00.000Z"
+        },
+        {
+            "id": "SU-011",
+            "incidentId": "INC-2026-044",
+            "message": "ALERT: api-gateway memory at 87%. WebSocket connections at 12,400 (threshold 10,000). Memory leak KI-005 active. Scheduled restart in 6h if not mitigated sooner.",
+            "author": "alertmanager",
+            "severity": "P3",
+            "status": "open",
+            "createdAt": "2026-02-28T11:00:00.000Z"
+        },
+        {
+            "id": "SU-012",
+            "incidentId": "INC-2026-040",
+            "message": "CDN cache poisoning detected in EU region. ops-team performing full edge cache purge across eu-west-1 and eu-central-1.",
+            "author": "ops-team",
+            "severity": "P3",
+            "status": "investigating",
+            "createdAt": "2026-02-25T14:10:00.000Z"
+        },
+        {
+            "id": "SU-013",
+            "incidentId": "INC-2026-040",
+            "message": "Full cache purge complete. EU edge nodes now serving correct assets. Monitoring error rates — back to baseline. Incident resolved.",
+            "author": "ops-team",
+            "severity": "P3",
+            "status": "resolved",
+            "createdAt": "2026-02-25T15:00:00.000Z"
+        },
+        {
+            "id": "SU-001",
+            "incidentId": "INC-2026-041",
+            "message": "Automated alert: auth-service error rate exceeded 5% threshold. Token refresh endpoint returning 401 for valid tokens.",
+            "author": "monitoring-bot",
+            "severity": "P2",
+            "status": "open",
+            "createdAt": "2026-02-18T09:15:00.000Z"
+        },
+        {
+            "id": "SU-002",
+            "incidentId": "INC-2026-041",
+            "message": "Investigating — appears related to token refresh endpoint. JWT signature validation failing for RS256 tokens. Checking recent deployments.",
+            "author": "maria.garcia",
+            "severity": "P2",
+            "status": "investigating",
+            "createdAt": "2026-02-18T09:22:00.000Z"
+        },
+        {
+            "id": "SU-003",
+            "incidentId": "INC-2026-041",
+            "message": "Root cause identified: deployment v3.0.9 introduced regression in JWT validation logic. RS256 algorithm tokens being incorrectly rejected due to key rotation bug.",
+            "author": "maria.garcia",
+            "severity": "P2",
+            "status": "identified",
+            "createdAt": "2026-02-18T09:45:00.000Z"
+        },
+        {
+            "id": "SU-004",
+            "incidentId": "INC-2026-041",
+            "message": "Rollback to v3.0.8 deployed successfully. Monitoring error rates — currently dropping back to baseline. Token refresh endpoint responding normally.",
+            "author": "maria.garcia",
+            "severity": "P2",
+            "status": "monitoring",
+            "createdAt": "2026-02-18T10:10:00.000Z"
+        },
+        {
+            "id": "SU-005",
+            "incidentId": "INC-2026-041",
+            "message": "Error rates back to normal (<0.1%). All users can log in successfully. Incident resolved. Post-mortem scheduled for Feb 19.",
+            "author": "maria.garcia",
+            "severity": "P2",
+            "status": "resolved",
+            "createdAt": "2026-02-18T10:30:00.000Z"
+        }
+    ],
+    "services": [
+        {
+            "serviceName": "payment-service",
+            "status": "down",
+            "uptime": 94.2,
+            "lastChecked": "2026-02-28T13:30:00.000Z",
+            "details": "HTTP 500 errors on /process-payment endpoint since 14:30 UTC. Connection pool exhaustion detected. All payment processing halted."
+        },
+        {
+            "serviceName": "checkout-api",
+            "status": "degraded",
+            "uptime": 97.1,
+            "lastChecked": "2026-02-28T13:30:00.000Z",
+            "details": "Elevated latency (p99 >8s, normal <500ms). Dependent on payment-service. Checkout flow timing out for most users."
+        },
+        {
+            "serviceName": "auth-service",
+            "status": "healthy",
+            "uptime": 99.98,
+            "lastChecked": "2026-02-28T13:30:00.000Z",
+            "details": "Operating normally. Token refresh and SSO flows working as expected."
+        },
+        {
+            "serviceName": "api-gateway",
+            "status": "healthy",
+            "uptime": 99.95,
+            "lastChecked": "2026-02-28T13:30:00.000Z",
+            "details": "Operating normally. Rate limiting and routing functioning as expected."
+        },
+        {
+            "serviceName": "order-database",
+            "status": "healthy",
+            "uptime": 99.99,
+            "lastChecked": "2026-02-28T13:30:00.000Z",
+            "details": "Operating normally. Read/write latency within SLA. No connection issues."
+        },
+        {
+            "serviceName": "cdn-static",
+            "status": "healthy",
+            "uptime": 99.97,
+            "lastChecked": "2026-02-28T13:30:00.000Z",
+            "details": "Operating normally. Cache hit rate 98.5%. All static assets serving correctly."
+        }
+    ],
+    "changeLog": [
+        {
+            "id": "CL-001",
+            "serviceName": "payment-service",
+            "type": "config_change",
+            "description": "Updated rate limiter thresholds and connection pool settings. Changed max pool size from 50 to 10 and idle timeout from 30s to 5s for 'optimization'.",
+            "author": "deploy-bot",
+            "timestamp": "2026-02-28T12:30:00.000Z",
+            "version": "v2.4.1"
+        },
+        {
+            "id": "CL-002",
+            "serviceName": "payment-service",
+            "type": "deployment",
+            "description": "Deployed payment-service v2.4.1 with config optimizations for connection pooling and rate limiting. Change ticket: CHG-4521.",
+            "author": "sarah.chen",
+            "timestamp": "2026-02-28T12:28:00.000Z",
+            "version": "v2.4.1"
+        },
+        {
+            "id": "CL-008",
+            "serviceName": "payment-service",
+            "type": "deployment",
+            "description": "Deployed payment-service v2.4.0 — new retry logic for downstream database calls and improved circuit breaker thresholds.",
+            "author": "sarah.chen",
+            "timestamp": "2026-02-28T10:00:00.000Z",
+            "version": "v2.4.0"
+        },
+        {
+            "id": "CL-009",
+            "serviceName": "payment-service",
+            "type": "rollback",
+            "description": "Emergency rollback of payment-service from v2.3.9 to v2.3.8 following elevated error rate post-deployment. Rolled back within 10 minutes.",
+            "author": "deploy-bot",
+            "timestamp": "2026-02-20T15:45:00.000Z",
+            "version": "v2.3.8"
+        },
+        {
+            "id": "CL-010",
+            "serviceName": "order-database",
+            "type": "config_change",
+            "description": "Increased max connections from 200 to 300 to accommodate growth in order volume. Applied during maintenance window.",
+            "author": "david.kim",
+            "timestamp": "2026-02-28T06:00:00.000Z"
+        },
+        {
+            "id": "CL-003",
+            "serviceName": "cdn-static",
+            "type": "deployment",
+            "description": "Routine CDN cache purge and static asset refresh. Updated bundled JS/CSS files for frontend v4.2.0.",
+            "author": "deploy-bot",
+            "timestamp": "2026-02-24T08:00:00.000Z",
+            "version": "v1.2.0"
+        },
+        {
+            "id": "CL-004",
+            "serviceName": "checkout-api",
+            "type": "deployment",
+            "description": "Added new promo code validation endpoint and updated cart calculation logic for multi-currency support.",
+            "author": "james.wilson",
+            "timestamp": "2026-02-23T22:00:00.000Z",
+            "version": "v3.8.2"
+        },
+        {
+            "id": "CL-005",
+            "serviceName": "auth-service",
+            "type": "deployment",
+            "description": "Security patch for token refresh flow. Fixed RS256 key rotation issue discovered in INC-2026-041.",
+            "author": "maria.garcia",
+            "timestamp": "2026-02-23T16:00:00.000Z",
+            "version": "v3.1.0"
+        },
+        {
+            "id": "CL-006",
+            "serviceName": "api-gateway",
+            "type": "config_change",
+            "description": "Updated CORS whitelist to add new partner domain partner.contoso.com. No service restart required.",
+            "author": "ops-team",
+            "timestamp": "2026-02-23T08:00:00.000Z"
+        },
+        {
+            "id": "CL-007",
+            "serviceName": "order-database",
+            "type": "hotfix",
+            "description": "Index optimization for order lookup queries. Added composite index on (customer_id, created_at) to improve dashboard load times.",
+            "author": "david.kim",
+            "timestamp": "2026-02-22T22:00:00.000Z",
+            "version": "v5.0.3"
+        }
+    ],
+    "knownIssues": [
+        {
+            "id": "KI-001",
+            "serviceName": "payment-service",
+            "title": "Connection pool exhaustion under modified pool settings",
+            "description": "When max connection pool size is set below 20, the payment service experiences connection pool exhaustion under normal traffic load (>200 TPS). This causes cascading 500 errors on the /process-payment endpoint.",
+            "workaround": "Revert max pool size to default value of 50. Do not set below 20 in production.",
+            "status": "open",
+            "createdAt": "2026-02-10T14:00:00.000Z"
+        },
+        {
+            "id": "KI-002",
+            "serviceName": "payment-service",
+            "title": "Payment timeout under sustained high load",
+            "description": "Under sustained traffic above 1000 TPS, payment processing latency increases exponentially due to thread pool saturation.",
+            "workaround": "Auto-scaling rule added in v2.3.0 to spin up additional instances above 800 TPS threshold.",
+            "status": "mitigated",
+            "createdAt": "2026-01-15T10:00:00.000Z"
+        },
+        {
+            "id": "KI-003",
+            "serviceName": "checkout-api",
+            "title": "Intermittent 502 when payment-service response exceeds 5s",
+            "description": "The checkout-api has a 5-second timeout for downstream calls to payment-service. When payment-service is slow, checkout returns 502 Bad Gateway instead of a graceful timeout message.",
+            "workaround": "Implement retry with exponential backoff on client side. Server-side fix planned for v3.9.0.",
+            "status": "open",
+            "createdAt": "2026-01-20T09:00:00.000Z"
+        },
+        {
+            "id": "KI-004",
+            "serviceName": "auth-service",
+            "title": "Token refresh race condition on mobile clients",
+            "description": "Concurrent token refresh requests from mobile apps could cause one request to invalidate the other's token, forcing re-authentication.",
+            "status": "resolved",
+            "createdAt": "2026-01-05T16:00:00.000Z"
+        },
+        {
+            "id": "KI-005",
+            "serviceName": "api-gateway",
+            "title": "Memory leak under high concurrent WebSocket connections",
+            "description": "API gateway leaks ~2MB/hour when handling more than 10,000 concurrent WebSocket connections. Causes OOM after ~48 hours without restart.",
+            "workaround": "Scheduled gateway restart every 12 hours via cron job.",
+            "status": "mitigated",
+            "createdAt": "2026-02-01T11:00:00.000Z"
+        }
+    ],
+    "stakeholders": [
+        {
+            "name": "Rachel Torres",
+            "role": "executive",
+            "email": "rachel.torres@contoso.com",
+            "serviceName": "all",
+            "notifyOnSeverity": [
+                "P1"
+            ]
+        },
+        {
+            "name": "Mike Chen",
+            "role": "executive",
+            "email": "mike.chen@contoso.com",
+            "serviceName": "all",
+            "notifyOnSeverity": [
+                "P1",
+                "P2"
+            ]
+        },
+        {
+            "name": "Sarah Chen",
+            "role": "engineering",
+            "email": "sarah.chen@contoso.com",
+            "serviceName": "payment-service",
+            "notifyOnSeverity": [
+                "P1",
+                "P2",
+                "P3"
+            ]
+        },
+        {
+            "name": "James Wilson",
+            "role": "engineering",
+            "email": "james.wilson@contoso.com",
+            "serviceName": "checkout-api",
+            "notifyOnSeverity": [
+                "P1",
+                "P2",
+                "P3"
+            ]
+        },
+        {
+            "name": "Alex Kumar",
+            "role": "on_call",
+            "email": "alex.kumar@contoso.com",
+            "serviceName": "payment-service",
+            "notifyOnSeverity": [
+                "P1",
+                "P2",
+                "P3",
+                "P4"
+            ]
+        },
+        {
+            "name": "Lisa Park",
+            "role": "customer_success",
+            "email": "lisa.park@contoso.com",
+            "serviceName": "all",
+            "notifyOnSeverity": [
+                "P1"
+            ]
+        },
+        {
+            "name": "David Kim",
+            "role": "engineering",
+            "email": "david.kim@contoso.com",
+            "serviceName": "order-database",
+            "notifyOnSeverity": [
+                "P1",
+                "P2"
+            ]
+        },
+        {
+            "name": "Ops Team",
+            "role": "operations",
+            "email": "ops-team@contoso.com",
+            "serviceName": "all",
+            "notifyOnSeverity": [
+                "P1",
+                "P2",
+                "P3",
+                "P4"
+            ]
+        },
+        {
+            "name": "Jamie Reeves",
+            "role": "on_call",
+            "email": "jamie.reeves@contoso.com",
+            "serviceName": "api-gateway",
+            "notifyOnSeverity": [
+                "P1",
+                "P2",
+                "P3",
+                "P4"
+            ]
+        }
+    ],
+    "postMortems": [
+        {
+            "id": "PM-001",
+            "incidentId": "INC-2026-041",
+            "summary": "Auth service token validation failures caused a 15-minute login disruption affecting approximately 2,000 users. The root cause was a regression in JWT signature validation introduced in deployment v3.0.9.",
+            "rootCause": "Deployment v3.0.9 of auth-service introduced a regression in the JWT signature validation module. The code change modified the key rotation logic to prefer ES256 keys over RS256, but failed to maintain backward compatibility. All existing RS256 tokens were rejected, causing widespread authentication failures.",
+            "impact": "Approximately 2,000 users were unable to log in or refresh their sessions for 15 minutes (09:15–10:30 UTC on Feb 18). No data loss occurred. Revenue impact was minimal as the incident occurred outside peak hours. Customer support received 47 tickets related to login issues.",
+            "timeline": [
+                {
+                    "timestamp": "2026-02-18T09:00:00.000Z",
+                    "event": "Deployment v3.0.9 rolled out to auth-service"
+                },
+                {
+                    "timestamp": "2026-02-18T09:15:00.000Z",
+                    "event": "Monitoring alert: auth-service error rate exceeded 5% threshold"
+                },
+                {
+                    "timestamp": "2026-02-18T09:22:00.000Z",
+                    "event": "On-call engineer maria.garcia begins investigation"
+                },
+                {
+                    "timestamp": "2026-02-18T09:45:00.000Z",
+                    "event": "Root cause identified: JWT RS256 validation regression in v3.0.9"
+                },
+                {
+                    "timestamp": "2026-02-18T10:10:00.000Z",
+                    "event": "Rollback to v3.0.8 deployed successfully"
+                },
+                {
+                    "timestamp": "2026-02-18T10:30:00.000Z",
+                    "event": "Error rates normalized. Incident resolved."
+                }
+            ],
+            "actionItems": [
+                {
+                    "action": "Add JWT validation integration tests covering RS256, ES256, and key rotation scenarios",
+                    "owner": "maria.garcia",
+                    "deadline": "2026-02-25",
+                    "status": "done"
+                },
+                {
+                    "action": "Implement canary deployment strategy for auth-service with automated rollback on error rate spike",
+                    "owner": "ops-team",
+                    "deadline": "2026-03-01",
+                    "status": "in_progress"
+                },
+                {
+                    "action": "Add pre-deployment smoke test that validates token refresh flow with all supported algorithms",
+                    "owner": "maria.garcia",
+                    "deadline": "2026-02-28",
+                    "status": "open"
+                }
+            ],
+            "createdAt": "2026-02-19T14:00:00.000Z",
+            "author": "maria.garcia"
+        },
+        {
+            "id": "PM-002",
+            "incidentId": "INC-2026-042",
+            "summary": "Payment service P1 outage caused by connection pool misconfiguration in v2.4.1 deployment. All customer transactions failed for approximately 20 minutes.",
+            "rootCause": "Config change CL-001 in deployment v2.4.1 reduced the payment-service connection pool max size from 50 to 10 as a misguided 'optimization'. Under normal production load (~300 TPS), the pool was exhausted within seconds causing 503 errors on all payment processing endpoints. Known issue KI-001 documented this risk but was not checked before the change was applied.",
+            "impact": "100% of customer transactions failed for ~20 minutes (13:00–13:20 UTC on Feb 28, 2026). Estimated revenue impact: $1M. 15,000+ customers affected. 200+ customer support tickets raised. SLA breach triggered for 3 enterprise customers.",
+            "timeline": [
+                {
+                    "timestamp": "2026-02-28T12:28:00.000Z",
+                    "event": "Deployment v2.4.1 rolled out to payment-service (config change reducing pool size 50→10)"
+                },
+                {
+                    "timestamp": "2026-02-28T13:00:00.000Z",
+                    "event": "monitoring-bot: 100% error rate on /process-payment, P1 incident auto-created INC-2026-042"
+                },
+                {
+                    "timestamp": "2026-02-28T13:05:00.000Z",
+                    "event": "INC-2026-043 created: checkout-api degraded due to downstream payment-service failure"
+                },
+                {
+                    "timestamp": "2026-02-28T13:08:00.000Z",
+                    "event": "alex.kumar (on-call) paged and begins investigation"
+                },
+                {
+                    "timestamp": "2026-02-28T13:15:00.000Z",
+                    "event": "sarah.chen identifies root cause: CL-001 connection pool config change"
+                },
+                {
+                    "timestamp": "2026-02-28T13:20:00.000Z",
+                    "event": "Config reverted to pool size 50. Services recovering."
+                },
+                {
+                    "timestamp": "2026-02-28T13:25:00.000Z",
+                    "event": "payment-service error rate back to baseline. INC-2026-042 resolved."
+                }
+            ],
+            "actionItems": [
+                {
+                    "action": "Add known issues checklist to deployment runbook — must verify KI list before any connection pool changes",
+                    "owner": "sarah.chen",
+                    "deadline": "2026-03-07",
+                    "status": "open"
+                },
+                {
+                    "action": "Implement automated pre-deployment validation that rejects pool size < 20 for payment-service",
+                    "owner": "ops-team",
+                    "deadline": "2026-03-14",
+                    "status": "open"
+                },
+                {
+                    "action": "Add load test stage to payment-service CI pipeline simulating 300 TPS to catch pool exhaustion before production",
+                    "owner": "sarah.chen",
+                    "deadline": "2026-03-14",
+                    "status": "open"
+                },
+                {
+                    "action": "Review all other services for similar risky config defaults",
+                    "owner": "ops-team",
+                    "deadline": "2026-03-07",
+                    "status": "open"
+                }
+            ],
+            "createdAt": "2026-02-28T14:00:00.000Z",
+            "author": "sarah.chen"
+        }
+    ]
+}

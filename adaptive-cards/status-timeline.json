@@ -1,0 +1,120 @@
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.5",
+    "metadata": {
+        "purpose": "Renders the output of get_status_timeline MCP tool",
+        "tool": "get_status_timeline",
+        "agent": "IC Communication, IC Post-Mortem"
+    },
+    "body": [
+        {
+            "type": "Container",
+            "style": "emphasis",
+            "bleed": true,
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "📋 Incident Timeline — {{incidentId}}",
+                                    "weight": "Bolder",
+                                    "size": "Large"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "$data": "{{updates}}",
+            "separator": true,
+            "spacing": "Small",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "spacing": "Small",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "70px",
+                            "verticalContentAlignment": "Top",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{status}}",
+                                    "weight": "Bolder",
+                                    "size": "Small",
+                                    "color": "Accent",
+                                    "wrap": false,
+                                    "spacing": "None"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{author}}",
+                                    "size": "Small",
+                                    "isSubtle": true,
+                                    "spacing": "None",
+                                    "wrap": false
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{message}}",
+                                    "wrap": true,
+                                    "spacing": "None",
+                                    "maxLines": 4
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{createdAt}}",
+                                    "isSubtle": true,
+                                    "size": "Small",
+                                    "spacing": "None"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "sampleData": {
+        "incidentId": "INC-2026-042",
+        "updates": [
+            {
+                "id": "SU-006",
+                "status": "open",
+                "author": "monitoring-bot",
+                "message": "ALERT: payment-service HTTP 503 error rate reached 100%. All /process-payment requests failing.",
+                "createdAt": "2026-02-28T13:00:00Z"
+            },
+            {
+                "id": "SU-007",
+                "status": "investigating",
+                "author": "alex.kumar",
+                "message": "On-call engineer paged. Suspect CL-001 config change reduced pool size from 50 to 10.",
+                "createdAt": "2026-02-28T13:08:00Z"
+            },
+            {
+                "id": "SU-008",
+                "status": "identified",
+                "author": "sarah.chen",
+                "message": "Root cause: CL-001 reduced connection pool max size to 10. Preparing rollback.",
+                "createdAt": "2026-02-28T13:15:00Z"
+            }
+        ]
+    }
+}

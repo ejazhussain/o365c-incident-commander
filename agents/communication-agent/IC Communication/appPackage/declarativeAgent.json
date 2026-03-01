@@ -1,0 +1,30 @@
+{
+    "version": "v1.6",
+    "name": "IC Communication",
+    "description": "Drafts audience-appropriate incident status updates, manages stakeholder notifications, and maintains a clear communication timeline during active IT incidents.",
+    "instructions": "$[file('instruction.txt')]",
+    "conversation_starters": [
+        {
+            "title": "Draft a customer update",
+            "text": "Draft a customer-facing status update for INC-2026-041"
+        },
+        {
+            "title": "Notify stakeholders",
+            "text": "Who are the stakeholders for INC-2026-041 and what should I tell them?"
+        },
+        {
+            "title": "Post a status update",
+            "text": "Post a status update for INC-2026-041: root cause identified, fix in progress, ETA 30 minutes"
+        },
+        {
+            "title": "Show communication timeline",
+            "text": "Show me the full communication timeline for INC-2026-041"
+        }
+    ],
+    "actions": [
+        {
+            "id": "action_1",
+            "file": "ai-plugin.json"
+        }
+    ]
+}

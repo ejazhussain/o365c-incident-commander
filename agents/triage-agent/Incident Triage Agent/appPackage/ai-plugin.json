@@ -1,0 +1,141 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/copilot/plugin/v2.4/schema.json",
+    "schema_version": "v2.4",
+    "name_for_human": "Incident Commander MCP Server",
+    "description_for_human": "Provides incident management tools for triaging IT major incidents",
+    "contact_email": "publisher-email@example.com",
+    "namespace": "incidenttriage",
+    "functions": [
+        {
+            "name": "list_active_incidents",
+            "description": "List all active incidents, optionally filtered by status or severity",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "description": "Filter by status: open, investigating, identified, monitoring, resolved"
+                    },
+                    "severity": {
+                        "type": "string",
+                        "description": "Filter by severity: P1, P2, P3, P4"
+                    }
+                }
+            },
+            "returns": {
+                "type": "string",
+                "description": "JSON array of incidents"
+            }
+        },
+        {
+            "name": "get_service_health",
+            "description": "Get current health status of all monitored services or a specific service",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "serviceName": {
+                        "type": "string",
+                        "description": "Optional service name to filter"
+                    }
+                }
+            },
+            "returns": {
+                "type": "string",
+                "description": "JSON array of service health records"
+            }
+        },
+        {
+            "name": "create_incident",
+            "description": "Create a new incident record in the system",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Short descriptive title"
+                    },
+                    "severity": {
+                        "type": "string",
+                        "description": "P1, P2, P3, or P4"
+                    },
+                    "services": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Affected service names"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Detailed description of impact"
+                    },
+                    "reportedBy": {
+                        "type": "string",
+                        "description": "Who reported the incident"
+                    },
+                    "assignedTo": {
+                        "type": "string",
+                        "description": "Who is assigned"
+                    }
+                },
+                "required": [
+                    "title",
+                    "severity",
+                    "services",
+                    "description"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Created incident object"
+            }
+        },
+        {
+            "name": "update_severity",
+            "description": "Escalate or de-escalate the severity of an existing incident",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID"
+                    },
+                    "newSeverity": {
+                        "type": "string",
+                        "description": "New severity: P1, P2, P3, or P4"
+                    },
+                    "reason": {
+                        "type": "string",
+                        "description": "Reason for the change"
+                    }
+                },
+                "required": [
+                    "incidentId",
+                    "newSeverity",
+                    "reason"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Updated incident object"
+            }
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "RemoteMCPServer",
+            "auth": {
+                "type": "None"
+            },
+            "spec": {
+                "url": "https://office365clinic.mcpserver.ngrok.app/mcp"
+            },
+            "run_for_functions": [
+                "list_active_incidents",
+                "get_service_health",
+                "create_incident",
+                "update_severity"
+            ]
+        }
+    ]
+}

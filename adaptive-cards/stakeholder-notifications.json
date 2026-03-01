@@ -1,0 +1,170 @@
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.5",
+    "metadata": {
+        "purpose": "Renders the output of get_stakeholders MCP tool",
+        "tool": "get_stakeholders",
+        "agent": "IC Communication"
+    },
+    "body": [
+        {
+            "type": "Container",
+            "style": "emphasis",
+            "bleed": true,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "👥 Stakeholder Notifications",
+                    "weight": "Bolder",
+                    "size": "Large"
+                }
+            ]
+        },
+        {
+            "type": "TextBlock",
+            "text": "The following stakeholders must be notified based on incident severity:",
+            "isSubtle": true,
+            "size": "Small",
+            "spacing": "Small",
+            "wrap": true
+        },
+        {
+            "type": "Container",
+            "$data": "{{executives}}",
+            "spacing": "Medium",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "🏢 EXECUTIVE",
+                    "weight": "Bolder",
+                    "size": "Small",
+                    "spacing": "None",
+                    "color": "Attention"
+                },
+                {
+                    "type": "ColumnSet",
+                    "spacing": "Small",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "**{{name}}**",
+                                    "spacing": "None"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{email}}",
+                                    "isSubtle": true,
+                                    "size": "Small",
+                                    "spacing": "None"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "verticalContentAlignment": "Center",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Notify on: {{notifyOnSeverity}}",
+                                    "size": "Small",
+                                    "isSubtle": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "$data": "{{engineering}}",
+            "spacing": "Small",
+            "separator": true,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "⚙️ ENGINEERING",
+                    "weight": "Bolder",
+                    "size": "Small",
+                    "spacing": "None",
+                    "color": "Accent"
+                },
+                {
+                    "type": "ColumnSet",
+                    "spacing": "Small",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "**{{name}}**",
+                                    "spacing": "None"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{email}} · {{serviceName}}",
+                                    "isSubtle": true,
+                                    "size": "Small",
+                                    "spacing": "None"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "verticalContentAlignment": "Center",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{notifyOnSeverity}}",
+                                    "size": "Small",
+                                    "isSubtle": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "sampleData": {
+        "executives": [
+            {
+                "name": "Rachel Torres",
+                "role": "executive",
+                "email": "rachel.torres@contoso.com",
+                "notifyOnSeverity": "P1"
+            },
+            {
+                "name": "Mike Chen",
+                "role": "executive",
+                "email": "mike.chen@contoso.com",
+                "notifyOnSeverity": "P1, P2"
+            }
+        ],
+        "engineering": [
+            {
+                "name": "Sarah Chen",
+                "role": "engineering",
+                "email": "sarah.chen@contoso.com",
+                "serviceName": "payment-service",
+                "notifyOnSeverity": "P1, P2, P3"
+            },
+            {
+                "name": "Alex Kumar",
+                "role": "on_call",
+                "email": "alex.kumar@contoso.com",
+                "serviceName": "payment-service",
+                "notifyOnSeverity": "P1, P2, P3, P4"
+            }
+        ]
+    }
+}

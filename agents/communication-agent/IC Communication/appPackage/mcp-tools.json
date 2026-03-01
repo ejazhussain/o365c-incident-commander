@@ -1,0 +1,82 @@
+{
+    "tools": [
+        {
+            "name": "get_incident",
+            "description": "Get full details of a specific incident including status, severity, affected services, and description",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID (e.g. INC-2026-041)"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            }
+        },
+        {
+            "name": "get_status_timeline",
+            "description": "Get the chronological status update timeline for an incident",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            }
+        },
+        {
+            "name": "add_status_update",
+            "description": "Post a new status update to an incident's communication timeline",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "The status update message"
+                    },
+                    "author": {
+                        "type": "string",
+                        "description": "Who is posting the update"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "New incident status: open, investigating, identified, monitoring, resolved"
+                    }
+                },
+                "required": [
+                    "incidentId",
+                    "message",
+                    "author"
+                ]
+            }
+        },
+        {
+            "name": "get_stakeholders",
+            "description": "Get the list of stakeholders who need to be notified for an incident",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            }
+        }
+    ]
+}

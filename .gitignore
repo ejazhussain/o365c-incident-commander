@@ -1,0 +1,33 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+dist/
+
+# Azure / M365
+.azure/
+**/.secrets/
+
+# Keys & Certs
+*.pem
+*.pfx
+*.key
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code (keep mcp.json)
+.vscode/*
+!.vscode/mcp.json
+
+# Build outputs
+*.js.map
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*

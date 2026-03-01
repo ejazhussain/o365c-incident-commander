@@ -1,0 +1,87 @@
+{
+    "tools": [
+        {
+            "name": "investigate_incident",
+            "description": "Run a complete root cause analysis for an incident in a single call. Returns the incident details, all recent deployments (24h), change log entries (24h), and known issues aggregated. PREFERRED over calling get_incident, get_deployment_history, get_change_log, and get_known_issues separately.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID to investigate (e.g. INC-2026-042)"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            }
+        },
+        {
+            "name": "get_incident",
+            "description": "Get full details of a specific incident by its ID, including status, severity, timeline, and affected services",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID (e.g. INC-2026-041)"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            }
+        },
+        {
+            "name": "get_change_log",
+            "description": "Get the change log of infrastructure and configuration changes, optionally filtered by time range or service",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "hours": {
+                        "type": "integer",
+                        "description": "Look back this many hours (default: 24)"
+                    },
+                    "service": {
+                        "type": "string",
+                        "description": "Filter by service name"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_known_issues",
+            "description": "Get a list of known issues and open bugs that may be contributing to an incident",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "service": {
+                        "type": "string",
+                        "description": "Filter by affected service name"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Filter by status: open, investigating, resolved"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_deployment_history",
+            "description": "Get recent deployment history, optionally filtered by service or time window",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "hours": {
+                        "type": "integer",
+                        "description": "Look back this many hours (default: 24)"
+                    },
+                    "service": {
+                        "type": "string",
+                        "description": "Filter by service name"
+                    }
+                }
+            }
+        }
+    ]
+}

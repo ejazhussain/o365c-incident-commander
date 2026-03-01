@@ -1,0 +1,130 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/copilot/plugin/v2.4/schema.json",
+    "schema_version": "v2.4",
+    "name_for_human": "IC Investigation",
+    "description_for_human": "Root cause analysis tools for investigating IT incidents",
+    "namespace": "incidentinvestigation",
+    "functions": [
+        {
+            "name": "get_incident",
+            "description": "Get full details of a specific incident by its ID, including status, severity, timeline, and affected services",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID (e.g. INC-2026-041)"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Full incident object as JSON"
+            }
+        },
+        {
+            "name": "get_change_log",
+            "description": "Get the change log of infrastructure and configuration changes, optionally filtered by time range or service",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "hours": {
+                        "type": "integer",
+                        "description": "Look back this many hours (default: 24)"
+                    },
+                    "service": {
+                        "type": "string",
+                        "description": "Filter by service name"
+                    }
+                }
+            },
+            "returns": {
+                "type": "string",
+                "description": "JSON array of change log entries"
+            }
+        },
+        {
+            "name": "get_known_issues",
+            "description": "Get a list of known issues and open bugs that may be contributing to an incident",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "service": {
+                        "type": "string",
+                        "description": "Filter by affected service name"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Filter by status: open, investigating, resolved"
+                    }
+                }
+            },
+            "returns": {
+                "type": "string",
+                "description": "JSON array of known issues"
+            }
+        },
+        {
+            "name": "get_deployment_history",
+            "description": "Get recent deployment history, optionally filtered by service or time window",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "hours": {
+                        "type": "integer",
+                        "description": "Look back this many hours (default: 24)"
+                    },
+                    "service": {
+                        "type": "string",
+                        "description": "Filter by service name"
+                    }
+                }
+            },
+            "returns": {
+                "type": "string",
+                "description": "JSON array of deployment records"
+            }
+        },
+        {
+            "name": "investigate_incident",
+            "description": "Run a complete root cause analysis for an incident in a single call. Returns the incident details, all recent deployments (24h), change log entries (24h), and known issues aggregated and ready to analyse. PREFERRED over calling get_incident, get_deployment_history, get_change_log, and get_known_issues separately.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID to investigate (e.g. INC-2026-042)"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Aggregated incident data including deployments, changes, and known issues as JSON"
+            }
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "RemoteMCPServer",
+            "auth": {
+                "type": "None"
+            },
+            "spec": {
+                "url": "https://office365clinic.mcpserver.ngrok.app/mcp"
+            },
+            "run_for_functions": [
+                "get_incident",
+                "get_change_log",
+                "get_known_issues",
+                "get_deployment_history",
+                "investigate_incident"
+            ]
+        }
+    ]
+}

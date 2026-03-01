@@ -1,0 +1,120 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/copilot/plugin/v2.4/schema.json",
+    "schema_version": "v2.4",
+    "name_for_human": "IC Communication",
+    "description_for_human": "Stakeholder communication and status update tools for active IT incidents",
+    "namespace": "incidentcommunication",
+    "functions": [
+        {
+            "name": "get_incident",
+            "description": "Get full details of a specific incident including status, severity, affected services, and description",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID (e.g. INC-2026-041)"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Full incident object as JSON"
+            }
+        },
+        {
+            "name": "get_status_timeline",
+            "description": "Get the chronological status update timeline for an incident",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "JSON array of status timeline entries in chronological order"
+            }
+        },
+        {
+            "name": "add_status_update",
+            "description": "Post a new status update to an incident's communication timeline",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "The status update message"
+                    },
+                    "author": {
+                        "type": "string",
+                        "description": "Who is posting the update"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "New incident status: open, investigating, identified, monitoring, resolved"
+                    }
+                },
+                "required": [
+                    "incidentId",
+                    "message",
+                    "author"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "Confirmation of the posted update"
+            }
+        },
+        {
+            "name": "get_stakeholders",
+            "description": "Get the list of stakeholders who need to be notified for an incident",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID"
+                    }
+                },
+                "required": [
+                    "incidentId"
+                ]
+            },
+            "returns": {
+                "type": "string",
+                "description": "JSON array of stakeholder records with name, role, and contact info"
+            }
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "RemoteMCPServer",
+            "auth": {
+                "type": "None"
+            },
+            "spec": {
+                "url": "https://office365clinic.mcpserver.ngrok.app/mcp"
+            },
+            "run_for_functions": [
+                "get_incident",
+                "get_status_timeline",
+                "add_status_update",
+                "get_stakeholders"
+            ]
+        }
+    ]
+}

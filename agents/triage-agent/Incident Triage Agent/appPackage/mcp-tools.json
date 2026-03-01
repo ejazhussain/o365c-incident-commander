@@ -1,0 +1,102 @@
+{
+    "tools": [
+        {
+            "name": "list_active_incidents",
+            "description": "List all active incidents, optionally filtered by status or severity",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "description": "Filter by status: open, investigating, identified, monitoring, resolved"
+                    },
+                    "severity": {
+                        "type": "string",
+                        "description": "Filter by severity: P1, P2, P3, P4"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_service_health",
+            "description": "Get current health status of all monitored services or a specific service",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "serviceName": {
+                        "type": "string",
+                        "description": "Optional service name to filter"
+                    }
+                }
+            }
+        },
+        {
+            "name": "create_incident",
+            "description": "Create a new incident record in the system",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Short descriptive title"
+                    },
+                    "severity": {
+                        "type": "string",
+                        "description": "P1, P2, P3, or P4"
+                    },
+                    "services": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Affected service names"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Detailed description of impact"
+                    },
+                    "reportedBy": {
+                        "type": "string",
+                        "description": "Who reported the incident"
+                    },
+                    "assignedTo": {
+                        "type": "string",
+                        "description": "Who is assigned"
+                    }
+                },
+                "required": [
+                    "title",
+                    "severity",
+                    "services",
+                    "description"
+                ]
+            }
+        },
+        {
+            "name": "update_severity",
+            "description": "Escalate or de-escalate the severity of an existing incident",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "incidentId": {
+                        "type": "string",
+                        "description": "The incident ID"
+                    },
+                    "newSeverity": {
+                        "type": "string",
+                        "description": "New severity: P1, P2, P3, or P4"
+                    },
+                    "reason": {
+                        "type": "string",
+                        "description": "Reason for the change"
+                    }
+                },
+                "required": [
+                    "incidentId",
+                    "newSeverity",
+                    "reason"
+                ]
+            }
+        }
+    ]
+}

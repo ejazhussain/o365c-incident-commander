@@ -1,0 +1,30 @@
+{
+    "version": "v1.6",
+    "name": "IC Investigation",
+    "description": "Investigates IT incidents by analysing change logs, recent deployments, known issues, and incident history to identify root causes.",
+    "instructions": "$[file('instruction.txt')]",
+    "conversation_starters": [
+        {
+            "title": "Investigate an incident",
+            "text": "Investigate INC-2026-041 and identify the probable root cause"
+        },
+        {
+            "title": "Check recent changes",
+            "text": "Show me the change log for the last 24 hours"
+        },
+        {
+            "title": "Recent deployments",
+            "text": "What deployments happened in the last 6 hours?"
+        },
+        {
+            "title": "Known issues",
+            "text": "Are there any known issues that could explain the current auth service problems?"
+        }
+    ],
+    "actions": [
+        {
+            "id": "action_1",
+            "file": "ai-plugin.json"
+        }
+    ]
+}

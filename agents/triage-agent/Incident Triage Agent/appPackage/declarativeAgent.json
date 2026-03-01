@@ -1,0 +1,30 @@
+{
+    "version": "v1.6",
+    "name": "IC Triage",
+    "description": "Triages IT incidents by assessing severity, checking service health, and creating or escalating incident records.",
+    "instructions": "$[file('instruction.txt')]",
+    "conversation_starters": [
+        {
+            "title": "What incidents are active right now?",
+            "text": "Show me all active incidents"
+        },
+        {
+            "title": "Check service health",
+            "text": "What is the current health status of all services?"
+        },
+        {
+            "title": "Report a new incident",
+            "text": "The payment service is down affecting all customers, create a P1 incident"
+        },
+        {
+            "title": "Escalate an incident",
+            "text": "Escalate INC-2026-041 to P1 — customer impact is broader than initially assessed"
+        }
+    ],
+    "actions": [
+        {
+            "id": "action_1",
+            "file": "ai-plugin.json"
+        }
+    ]
+}
