@@ -1,7 +1,7 @@
 # 🚨 Incident Commander — Build TODO
 
-> **Last updated:** Feb 28, 2026  
-> **Status:** Phase 1 ✅ Phase 2 ✅ Phase 3 ✅ Phase 4 ✅ Phase 5 ✅ Phase 6 ✅ Phase 7 ✅ complete — Phase 8 Adaptive Cards next
+> **Last updated:** March 1, 2026  
+> **Status:** ALL PHASES COMPLETE ✅ — Submitted to Agents League 🏆
 
 ---
 
@@ -94,23 +94,33 @@
 - ⚠️ `response_semantics` is NOT supported in `RemoteMCPServer` MCP plugins (OpenAPI only) — cards removed from ai-plugin.json files to fix 400 provisioning error
 - ⚠️ Cards are design artifacts for the repo / future Bot Framework integration, not rendered live in Copilot Chat
 
-## Phase 9: End-to-End Testing — ⏳ TODO
-- [ ] Run full demo scenario: report → triage → investigate → communicate → resolve → post-mortem
-- [ ] Verify all 4 sub-agents callable from Commander with real MCP data
-- [ ] Verify MCP read + write operations work through agents
-- [ ] Verify OAuth token flow works end-to-end
-- [ ] Fix any routing or data issues
+## Phase 9: End-to-End Testing ✅ DONE
+- [x] Run full demo scenario: service health → incident lookup → root cause → status update → post-mortem
+- [x] Verified all 4 sub-agents callable from Commander with real MCP data
+- [x] Verified MCP read + write operations work through agents
+- [x] Fixed IC Commander not relaying worker agent responses (payload size — enforced 1 MCP call per request)
+- [x] Fixed IC Triage double-calling `get_service_health` (context-aware instruction rewrite)
+- [x] Fixed `get_stakeholders` returning empty array (fuzzy matching in dataStore + seed data update)
+- [x] Fixed `investigate_incident` missing from IC Investigation + IC Post-Mortem ai-plugin.json/mcp-tools.json
+- [x] Added combined `investigate_incident` tool (aggregates 4 sources in 1 MCP call)
+- [x] Scenes 1–5 working end-to-end in M365 Copilot Chat ✅
 
-## Phase 10: Demo & Submission — ⏳ TODO
-- [ ] Script the demo walkthrough (full lifecycle via IC Commander)
-- [ ] Record 3–5 min demo video
-- [ ] Polish README with final screenshots/GIFs
-- [ ] Verify no secrets in repo (`git secrets --scan`)
-- [ ] Ensure repo is public
-- [ ] Submit via GitHub Issue using project submission template
-- [ ] Post on Discord for community vote
+## Phase 10: Demo & Submission ✅ DONE
+- [x] Scripted 5-step demo walkthrough (full lifecycle via IC Commander)
+- [x] Recorded demo video (`assets/demo/Incident_Commander_Demo.mp4`)
+- [x] Added 5 screenshots (`assets/screenshots/01-05`)
+- [x] README updated — demo video + screenshots embedded, Getting Started polished, ngrok step added
+- [x] Verified no secrets in repo — all credentials in `env/.env` (gitignored)
+- [x] Public repo created and pushed: https://github.com/ejazhussain/o365c-incident-commander
+- [x] Submitted via GitHub Issue using project submission template ✅
+- [x] Posted on Discord `#agentsleague` channel for community vote ✅
 
 ---
+
+## ✅ SUBMITTED — March 1, 2026
+- 🔗 Public repo: https://github.com/ejazhussain/o365c-incident-commander
+- 🏆 Submission issue: https://github.com/microsoft/agentsleague/issues
+- 🗳️ Community vote: https://aka.ms/agentsleague/favorite
 
 ## ⏰ Deadline: March 1, 2026 (11:59 PM PT)
 ## 📅 Days remaining: ~1
