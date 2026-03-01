@@ -191,7 +191,7 @@ When a P1/P2 production incident hits, enterprises scramble — engineers are pa
 
 - **Runtime**: Node.js + TypeScript
 - **Framework**: Express + `@modelcontextprotocol/sdk`
-- **Auth**: OAuth 2.0 via Microsoft Entra ID (JWT validation against JWKS)
+- **Auth**: OAuth 2.0 via Microsoft Entra ID (JWT validation against JWKS) — set `AUTH_ENABLED=false` in `env/.env` to disable for demo/local testing
 - **Data**: Mock JSON store (swappable with Azure Cosmos DB)
 - **Tunnel**: VS Code Dev Tunnels for HTTPS during development
 
