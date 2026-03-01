@@ -289,10 +289,37 @@ Structured report with collapsible sections: Summary, Timeline, Root Cause Analy
 │   ├── status-update.json
 │   └── postmortem-summary.json
 │
+├── 📂 assets/
+│   ├── 📂 demo/
+│   │   └── Incident_Commander_Demo.mp4    # Full walkthrough demo
+│   └── 📂 screenshots/                    # Agent screenshots
+│
 ├── .gitignore
 ├── LICENSE
 └── README.md                          # ← This file
 ```
+
+---
+
+## Demo
+
+### 📽️ Demo Video
+
+https://github.com/ejazhussain/o365c-incident-commander/raw/main/assets/demo/Incident_Commander_Demo.mp4
+
+### 📸 Screenshots
+
+| IC Triage — Service Health | IC Triage — Incident Lookup |
+|---|---|
+| ![Triage Service Health](assets/screenshots/01-triage.png) | ![Triage Incident](assets/screenshots/02-triage.png) |
+
+| IC Investigation — Root Cause | IC Communication — Status Update |
+|---|---|
+| ![Investigation](assets/screenshots/03-investigation.png) | ![Communication](assets/screenshots/04-communication.png) |
+
+| IC Post-Mortem — Report |
+|---|
+| ![Post-Mortem](assets/screenshots/05-post-mortem.png) |
 
 ---
 
