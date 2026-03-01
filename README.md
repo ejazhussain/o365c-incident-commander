@@ -296,49 +296,6 @@ Structured report with collapsible sections: Summary, Timeline, Root Cause Analy
 
 ---
 
-## Competition Scoring Target
-
-### Technical Bonus Points (33/33)
-
-| Criterion | Points | Status |
-|-----------|--------|--------|
-| M365 Copilot Chat Agent | Required | ✅ Commander orchestrator in Copilot Chat |
-| Connected Agents Architecture | 15 | ✅ 5 DAs with `worker_agents` orchestration |
-| External MCP Server (Read/Write) | 8 | ✅ 12 tools (8 read + 4 write) with OAuth |
-| OAuth Security for MCP | 5 | ✅ Entra ID JWT validation |
-| Adaptive Cards UI/UX | 5 | ✅ 4 card templates |
-| **Total** | **33** | **✅** |
-
-### Judging Criteria Strategy
-
-| Criterion | Weight | Our Approach |
-|-----------|--------|-------------|
-| Accuracy & Relevance | 20% | Directly solves a universal enterprise problem with proper M365 integration |
-| Reasoning & Multi-step Thinking | 20% | Each agent has a documented multi-step reasoning chain |
-| Reliability & Safety | 20% | OAuth, Entra ID, input validation, no hardcoded secrets |
-| Creativity & Originality | 15% | Unique incident response angle — nobody else will build this |
-| UX & Presentation | 15% | Adaptive Cards + compelling live demo video |
-| Community Vote | 10% | Relatable problem — every developer has lived through a P1 |
-
----
-
-## Build Order
-
-| Phase | Task | Est. Time |
-|-------|------|-----------|
-| 1 | MCP Server — scaffold, implement 12 tools, seed data | 4–6 hrs |
-| 2 | MCP Server — add OAuth (Entra ID app reg + JWT validation) | 2–3 hrs |
-| 3 | Triage Agent — scaffold DA, connect MCP tools, write instructions | 2–3 hrs |
-| 4 | Investigation Agent — scaffold DA, connect MCP tools, add runbook PDF | 2–3 hrs |
-| 5 | Communication Agent — scaffold DA, connect MCP tools, Adaptive Cards | 2–3 hrs |
-| 6 | Post-Mortem Agent — scaffold DA, connect MCP tools, write instructions | 2–3 hrs |
-| 7 | Commander Orchestrator — scaffold DA, wire `worker_agents`, routing instructions | 1–2 hrs |
-| 8 | End-to-end testing in M365 Copilot Chat | 2–3 hrs |
-| 9 | Demo video recording + README polish | 2–3 hrs |
-| **Total** | | **~20–28 hrs** |
-
----
-
 ## Demo Scenario
 
 **"Payment Service Outage"** — A realistic P1 incident walk-through:
@@ -373,7 +330,7 @@ Structured report with collapsible sections: Summary, Timeline, Root Cause Analy
 
 ```bash
 # Clone the repo
-git clone https://github.com/<YOUR_USERNAME>/o365c-incident-commander.git
+git clone https://github.com/ejazhussain/o365c-incident-commander.git
 cd o365c-incident-commander
 
 # Set up the MCP server
@@ -383,8 +340,7 @@ cp .env.example .env
 # Fill in Entra ID credentials in .env
 npm run dev
 
-# Open each agent project in VS Code with ATK
-# Follow the build order above
+# Open each agent folder in VS Code with M365 Agents Toolkit to provision and deploy
 ```
 
 ---
