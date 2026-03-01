@@ -369,7 +369,7 @@ cp env/.env.example env/.env
 # Fill in Entra ID credentials in env/.env
 
 # 4. Start the MCP server
-npm run dev
+npm start
 # Server runs on http://localhost:3001
 
 # 5. In a separate terminal — expose the MCP server over HTTPS via ngrok
