@@ -356,18 +356,30 @@ https://github.com/ejazhussain/o365c-incident-commander/raw/main/assets/demo/Inc
 ## Getting Started
 
 ```bash
-# Clone the repo
+# 1. Clone the repo
 git clone https://github.com/ejazhussain/o365c-incident-commander.git
 cd o365c-incident-commander
 
-# Set up the MCP server
+# 2. Set up the MCP server
 cd mcp-server
 npm install
-cp .env.example .env
-# Fill in Entra ID credentials in .env
-npm run dev
 
-# Open each agent folder in VS Code with M365 Agents Toolkit to provision and deploy
+# 3. Configure environment variables
+cp env/.env.example env/.env
+# Fill in Entra ID credentials in env/.env
+
+# 4. Start the MCP server
+npm run dev
+# Server runs on http://localhost:3001
+
+# 5. In a separate terminal — expose the MCP server over HTTPS via ngrok
+ngrok http 3001 --domain=<your-ngrok-domain>
+# e.g. ngrok http 3001 --domain=office365clinic.mcpserver.ngrok.app
+# Update the MCP server URL in each agent's env/.env to match your ngrok domain
+
+# 6. Open each agent folder in VS Code with M365 Agents Toolkit
+
+# 7. Run "Provision" for each agent to deploy to your M365 tenant
 ```
 
 ---
